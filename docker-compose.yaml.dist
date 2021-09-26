@@ -1,0 +1,22 @@
+version: "3.6"
+
+services:
+    achi:
+        build:
+            context: .
+        container_name: achi
+        environment:
+            TZ: "Europe/London" # Optional
+            ACHI_LOG_LEVEL: "DEBUG" # Optional
+            ACHI_CA: "/root/tmp/ca"
+            ACHI_KEYS: "copy"
+            ACHI_WALLET_KEY: "my secret mnenonic goes here" # Optional
+            ACHI_PLOTS_DIR: "/plots/dir1:/plots/dir2" # Optional
+        volumes:
+            # Assume you've already used Achi GUI and set up full node locally
+            - "~/.achi/mainnet/config/ssl/ca:/root/tmp/ca:ro"
+            - "~/.achi/mainnet/db:/root/.achi/mainnet/db"
+            - "~/.achi/mainnet/wallet:/root/.achi/mainnet/wallet"
+            # Mount your plot directories. Make sure you include them in ACHI_PLOTS_DIR variable
+            - "~/my_local_plots_dir1:/plots/dir1"
+            - "~/my_local_plots_dir2:/plots/dir2"
